@@ -2,10 +2,9 @@ import * as React from "react";
 import axios from "axios";
 import { Post } from "../../Interface/Post";
 import { Button, Container, Typography } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-import Second from "../Second/Second";
 
 const useStyles = makeStyles({
   container: {
@@ -64,19 +63,24 @@ const PostList: React.FC = () => {
 
   return (
     <Container className={classes.container}>
-      <Typography variant="h4" style={{alignContent:'center', textAlign:'center', marginTop:'20px',marginBottom:'20px'}} className={classes.header}>Posts</Typography>
+      <Typography variant="h4" style={{ alignContent: 'center', textAlign: 'center', marginTop: '20px', marginBottom: '20px' }} className={classes.header}>Posts</Typography>
       <div className={classes.dataGrid}>
         <DataGrid
           rows={posts}
           columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10, 20, 50]}
+          pageSizeOptions={[10, 20, 50]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 10, page: 0 },
+            },
+          }}
+          slots={{ toolbar: GridToolbar }}
         />
       </div>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={() => navigate('/Second')} 
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate('/Second')}
         style={{ marginTop: '20px' }}
       >
         Visit the Second Page
